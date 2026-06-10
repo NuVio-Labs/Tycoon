@@ -11,11 +11,12 @@ type TopBarProps = {
   experience: number;
   focus: number;
   maxFocus: number;
+  knowledgePerClick: number;
   activeGoal: ActiveGoalData;
   goalProgress: number; // 0-100 overall epoch progress for the ring
 };
 
-function TopBar({ knowledge, experience, focus, maxFocus, activeGoal, goalProgress }: TopBarProps) {
+function TopBar({ knowledge, experience, focus, maxFocus, knowledgePerClick, activeGoal, goalProgress }: TopBarProps) {
   const focusPercent = Math.round((focus / maxFocus) * 100);
 
   // SVG circle progress ring
@@ -57,7 +58,12 @@ function TopBar({ knowledge, experience, focus, maxFocus, activeGoal, goalProgre
         <div className="flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-[#E0B84A]/20 bg-[#111111] px-3 py-2.5">
           <Brain size={14} className="shrink-0 text-[#E0B84A]" />
           <div className="min-w-0">
-            <p className="text-[9px] font-semibold tracking-[0.15em] text-[#B9B2A3]">WISSEN</p>
+            <div className="flex items-center gap-1.5">
+              <p className="text-[9px] font-semibold tracking-[0.15em] text-[#B9B2A3]">WISSEN</p>
+              {knowledgePerClick > 1 && (
+                <span className="text-[8px] font-bold text-[#E0B84A]/70">+{knowledgePerClick}/Klick</span>
+              )}
+            </div>
             <p className="truncate text-base font-black text-[#E0B84A] leading-none">{knowledge.toLocaleString("de-DE")}</p>
           </div>
         </div>

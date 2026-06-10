@@ -69,7 +69,7 @@ function Kinderzimmer() {
   const tabContent: Record<TabId, React.ReactNode> = {
     uebersicht: (
       <div className="space-y-3">
-        <ClickArea focus={resources.focus} onLearnCode={learnCode} />
+        <ClickArea focus={resources.focus} knowledgePerClick={getKnowledgePerClick()} onLearnCode={learnCode} />
 
         {/* Streak badge */}
         {currentStreak >= 3 && (
@@ -226,6 +226,7 @@ function Kinderzimmer() {
           experience={resources.experience}
           focus={resources.focus}
           maxFocus={resources.maxFocus}
+          knowledgePerClick={getKnowledgePerClick()}
           activeGoal={activeGoal}
           goalProgress={goalProgress}
         />

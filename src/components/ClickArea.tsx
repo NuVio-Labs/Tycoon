@@ -10,6 +10,7 @@ type FloatingNumber = {
 
 type ClickAreaProps = {
   focus: number;
+  knowledgePerClick: number;
   onLearnCode: () => void;
 };
 
@@ -35,7 +36,7 @@ const CODE_LINES = [
   { text: "</div>", color: "#E0B84A" },
 ];
 
-function ClickArea({ focus, onLearnCode }: ClickAreaProps) {
+function ClickArea({ focus, knowledgePerClick, onLearnCode }: ClickAreaProps) {
   const [floaters, setFloaters] = useState<FloatingNumber[]>([]);
   const [clicking, setClicking] = useState(false);
   const [codeLines, setCodeLines] = useState<{ id: number; line: typeof CODE_LINES[0] }[]>([]);
@@ -212,7 +213,7 @@ function ClickArea({ focus, onLearnCode }: ClickAreaProps) {
                 : "bg-[#E0B84A] text-[#050505] shadow-[#E0B84A]/30 hover:shadow-[#E0B84A]/50"
               }`}
           >
-            {depleted ? "Kein Fokus…" : "Code lernen  +1"}
+            {depleted ? "Kein Fokus…" : `Code lernen  +${knowledgePerClick}`}
           </motion.div>
         </button>
 
@@ -233,7 +234,7 @@ function ClickArea({ focus, onLearnCode }: ClickAreaProps) {
             className="pointer-events-none absolute text-lg font-black text-[#E0B84A] drop-shadow-lg"
             style={{ top: 0, left: 0 }}
           >
-            +1
+            +{knowledgePerClick}
           </motion.span>
         ))}
       </AnimatePresence>
