@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import kinderzimmerBg from "../assets/Kinderzimmer background.png";
+import azubiBg from "../assets/epoche2.png";
 
 type Epoche = {
   nr: number;
@@ -24,7 +25,7 @@ const EPOCHEN: Epoche[] = [
     title: "Azubi-Zimmer",
     subtitle: "Lernen & Wachsen",
     bullets: ["Neue Technologien", "Erste Tools", "Git & GitHub"],
-    image: null,
+    image: azubiBg,
     gradient: "from-blue-900/60 to-black",
   },
   {

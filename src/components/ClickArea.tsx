@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import backgroundPng from "../assets/Kinderzimmer background.png";
+import azubiPng from "../assets/epoche2.png";
 
 type FloatingNumber = {
   id: number;
@@ -60,9 +61,6 @@ const CODE_LINES_AZUBI: CodeLine[] = [
   { text: "$ git merge feature/login", color: "#fb923c" },
   { text: "export default App;", color: "#7dd3fc" },
 ];
-
-// Stadtsilhouette für das Azubi-Bürofenster (deterministisch, kein Math.random im Render)
-const SKYLINE = [38, 60, 45, 72, 52, 66, 40, 58];
 
 function ClickArea({ scene, focus, knowledgePerClick, onLearnCode }: ClickAreaProps) {
   const [floaters, setFloaters] = useState<FloatingNumber[]>([]);
@@ -218,82 +216,30 @@ function ClickArea({ scene, focus, knowledgePerClick, onLearnCode }: ClickAreaPr
           </div>
         </>
       ) : (
-        /* ── Azubi-Büro bei Nacht — komplett aus CSS gebaut ──────────────── */
-        <div className="relative h-[340px] w-full md:h-[420px] bg-gradient-to-b from-[#0b1322] via-[#0d1626] to-[#0a0f1c]">
-          {/* Fenster mit Stadt-Skyline */}
-          <div className="absolute right-[7%] top-[8%] h-[42%] w-[30%] overflow-hidden rounded-lg border-4 border-[#1e293b] bg-gradient-to-b from-[#16264a] to-[#0c142b] shadow-[inset_0_0_24px_rgba(0,0,0,0.6)]">
-            {/* Mond */}
-            <div className="absolute right-[14%] top-[12%] h-5 w-5 rounded-full bg-[#e8e4d8] shadow-[0_0_14px_rgba(232,228,216,0.5)]" />
-            {/* Sterne */}
-            <div className="absolute left-[18%] top-[18%] h-0.5 w-0.5 rounded-full bg-white/70" />
-            <div className="absolute left-[42%] top-[10%] h-0.5 w-0.5 rounded-full bg-white/50" />
-            <div className="absolute left-[64%] top-[26%] h-0.5 w-0.5 rounded-full bg-white/60" />
-            {/* Skyline */}
-            <div className="absolute bottom-0 flex w-full items-end justify-around">
-              {SKYLINE.map((h, i) => (
-                <div key={i} className="relative w-[10%] bg-[#0a1020]" style={{ height: `${h}px` }}>
-                  <div className="absolute left-1 top-1.5 h-1 w-1 bg-amber-200/60" />
-                  <div className="absolute right-1 top-4 h-1 w-1 bg-amber-200/40" />
-                  {h > 50 && <div className="absolute left-1 top-7 h-1 w-1 bg-amber-200/30" />}
-                </div>
-              ))}
-            </div>
-            {/* Fensterkreuz */}
-            <div className="absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 bg-[#1e293b]" />
-            <div className="absolute top-1/2 left-0 h-1 w-full -translate-y-1/2 bg-[#1e293b]" />
+        <>
+          {/* Azubi-Büro — eigenes Hintergrundbild */}
+          <img
+            src={azubiPng}
+            alt="Azubi-Zimmer"
+            className="block h-[340px] w-full object-cover object-center md:h-[420px]"
+            draggable={false}
+          />
+
+          {/* Code-Overlay — über dem linken Monitor im Bild */}
+          <div
+            className="absolute overflow-hidden rounded-sm"
+            style={{
+              left: "26.5%",
+              top: "24%",
+              width: "19%",
+              height: "34%",
+              background: "rgba(2, 8, 16, 0.85)",
+              boxShadow: "inset 0 0 18px rgba(0,0,0,0.8)",
+            }}
+          >
+            {codeScreen}
           </div>
-
-          {/* Regal mit Büchern + Pflanze (links oben) */}
-          <div className="absolute left-[6%] top-[14%] w-[20%]">
-            <div className="flex items-end gap-1 px-2">
-              <div className="h-9 w-2.5 rounded-sm bg-[#7c3aed]/70" />
-              <div className="h-7 w-2.5 rounded-sm bg-[#0ea5e9]/70" />
-              <div className="h-10 w-2.5 rounded-sm bg-[#f59e0b]/70" />
-              <div className="h-8 w-2.5 rounded-sm bg-[#10b981]/70" />
-              <span className="ml-1 text-base leading-none">🪴</span>
-            </div>
-            <div className="mt-0.5 h-1.5 w-full rounded-sm bg-[#3b2f23]" />
-          </div>
-
-          {/* PixelWerk-Poster */}
-          <div className="absolute left-[8%] top-[42%] flex h-[16%] w-[13%] items-center justify-center rounded-sm border border-white/10 bg-[#101a30]">
-            <p className="text-center text-[7px] font-black tracking-widest text-cyan-300/80 md:text-[9px]">PIXEL<br />WERK</p>
-          </div>
-
-          {/* Schreibtischplatte */}
-          <div className="absolute bottom-[16%] left-[4%] right-[4%]">
-            <div className="h-2.5 w-full rounded-sm bg-gradient-to-b from-[#4a3826] to-[#33271a] shadow-lg" />
-            <div className="mx-[6%] flex justify-between">
-              <div className="h-14 w-2 bg-[#2a2015] md:h-20" />
-              <div className="h-14 w-2 bg-[#2a2015] md:h-20" />
-            </div>
-          </div>
-
-          {/* Haupt-Monitor mit Code — links, damit NuVion ihn nicht verdeckt */}
-          <div className="absolute bottom-[22%] left-[20%] w-[32%]">
-            <div className="relative h-[110px] w-full overflow-hidden rounded-md border-4 border-[#1b1f2a] bg-[rgba(2,8,16,0.92)] shadow-[0_0_30px_rgba(56,189,248,0.12),inset_0_0_18px_rgba(0,0,0,0.8)] md:h-[150px]">
-              {codeScreen}
-            </div>
-            {/* Standfuß */}
-            <div className="mx-auto h-3 w-3 bg-[#1b1f2a]" />
-            <div className="mx-auto h-1.5 w-16 rounded-sm bg-[#1b1f2a]" />
-          </div>
-
-          {/* Laptop rechts auf dem Tisch */}
-          <div className="absolute bottom-[19.5%] right-[9%] w-[14%]">
-            <div className="h-8 w-full rounded-t-sm border-2 border-[#222a38] bg-gradient-to-b from-[#0e2233] to-[#081420] md:h-11">
-              <div className="mx-1.5 mt-1.5 h-1 rounded-full bg-cyan-400/30" />
-              <div className="mx-1.5 mt-1 h-1 w-2/3 rounded-full bg-cyan-400/20" />
-            </div>
-            <div className="h-1 w-full rounded-b-sm bg-[#222a38]" />
-          </div>
-
-          {/* Kaffee links auf dem Tisch */}
-          <span className="absolute bottom-[20%] left-[13%] text-lg md:text-xl">☕</span>
-
-          {/* Ambient-Licht vom Monitor */}
-          <div className="pointer-events-none absolute bottom-[10%] left-[16%] h-[40%] w-[44%] rounded-full bg-cyan-400/5 blur-2xl" />
-        </div>
+        </>
       )}
 
       {/* Dark overlay — bleibt dunkel, liegt über der Szene */}
