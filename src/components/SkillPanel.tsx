@@ -3,6 +3,8 @@ import type { Skill, SkillId } from "../types/skill";
 
 type SkillPanelProps = {
   skills: Skill[];
+  // Bereits gemeisterte Skills aus früheren Epochen (kompakt angezeigt)
+  masteredSkills?: Skill[];
   knowledge: number;
   getSkillCost: (id: SkillId) => number;
   onBuy: (id: SkillId) => void;
@@ -12,12 +14,18 @@ const SKILL_ICONS: Record<string, string> = {
   html: "🏗️",
   css: "🎨",
   javascript: "⚡",
+  git: "🌿",
+  react: "⚛️",
+  typescript: "🛡️",
 };
 
 const SKILL_COLORS: Record<string, string> = {
-  html: "from-orange-500 to-[#E0B84A]",
+  html: "from-orange-500 to-accent",
   css: "from-blue-500 to-cyan-400",
-  javascript: "from-yellow-400 to-[#E0B84A]",
+  javascript: "from-yellow-400 to-accent",
+  git: "from-orange-500 to-red-400",
+  react: "from-cyan-400 to-blue-500",
+  typescript: "from-blue-500 to-indigo-400",
 };
 
 const MILESTONES = [25, 50, 75, 100];
@@ -26,7 +34,7 @@ function SkillBar({ level, maxLevel, colorClass }: { level: number; maxLevel: nu
   const pct = (level / maxLevel) * 100;
 
   return (
-    <div className="relative mt-2 h-3 w-full overflow-hidden rounded-full bg-white/10">
+    <div className="relative mt-2 h-3 w-full overflow-hidden rounded-full bg-overlay/10">
       {/* Fill */}
       <motion.div
         className={`h-full rounded-full bg-gradient-to-r ${colorClass}`}
@@ -45,10 +53,27 @@ function SkillBar({ level, maxLevel, colorClass }: { level: number; maxLevel: nu
   );
 }
 
-function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps) {
+function SkillPanel({ skills, masteredSkills, knowledge, getSkillCost, onBuy }: SkillPanelProps) {
   return (
     <div className="space-y-3">
-      <h2 className="text-xs font-semibold tracking-[0.25em] text-[#B9B2A3] uppercase">Skills</h2>
+      <h2 className="text-xs font-semibold tracking-[0.25em] text-muted uppercase">Skills</h2>
+
+      {/* Gemeisterte Skills aus früheren Epochen — kompakt */}
+      {masteredSkills && masteredSkills.length > 0 && (
+        <div className="rounded-2xl border border-accent/15 bg-accent/4 px-4 py-3">
+          <p className="text-[9px] font-semibold tracking-[0.2em] text-accent">GEMEISTERT — EPOCHE 1</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {masteredSkills.map((s) => (
+              <span
+                key={s.id}
+                className="flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-bold text-accent"
+              >
+                {SKILL_ICONS[s.id] ?? "💡"} {s.name} ✓
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {skills.map((skill, i) => {
         const cost = getSkillCost(skill.id);
@@ -62,7 +87,7 @@ function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps)
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="rounded-2xl border border-white/8 bg-[#111111] p-4"
+            className="rounded-2xl border border-overlay/8 bg-card p-4"
           >
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -79,10 +104,10 @@ function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps)
                           const partial = !filled && pct > idx * 10;
                           const fillPct = partial ? ((pct - idx * 10) / 10) * 100 : 0;
                           return (
-                            <div key={idx} className="relative h-2.5 w-2 overflow-hidden rounded-sm bg-white/10">
+                            <div key={idx} className="relative h-2.5 w-2 overflow-hidden rounded-sm bg-overlay/10">
                               {(filled || partial) && (
                                 <div
-                                  className={`absolute left-0 top-0 h-full bg-gradient-to-r ${SKILL_COLORS[skill.id] ?? "from-[#E0B84A] to-[#E0B84A]"}`}
+                                  className={`absolute left-0 top-0 h-full bg-gradient-to-r ${SKILL_COLORS[skill.id] ?? "from-accent to-accent"}`}
                                   style={{ width: filled ? "100%" : `${fillPct}%` }}
                                 />
                               )}
@@ -90,14 +115,14 @@ function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps)
                           );
                         })}
                       </div>
-                      <span className="text-[10px] font-semibold text-[#B9B2A3]">Lv.{skill.level}</span>
+                      <span className="text-[10px] font-semibold text-muted">Lv.{skill.level}</span>
                     </div>
                   </div>
 
                   <SkillBar
                     level={skill.level}
                     maxLevel={skill.maxLevel}
-                    colorClass={SKILL_COLORS[skill.id] ?? "from-[#E0B84A] to-[#E0B84A]"}
+                    colorClass={SKILL_COLORS[skill.id] ?? "from-accent to-accent"}
                   />
 
                   {/* Milestone labels */}
@@ -106,7 +131,7 @@ function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps)
                       <span
                         key={m}
                         className={`absolute text-[8px] -translate-x-1/2 transition-colors ${
-                          skill.level >= m ? "text-[#E0B84A]/60" : "text-white/20"
+                          skill.level >= m ? "text-accent/60" : "text-foreground/20"
                         }`}
                         style={{ left: `${m}%` }}
                       >
@@ -122,10 +147,10 @@ function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps)
                 disabled={!canBuy}
                 className={`shrink-0 rounded-xl px-3 py-2 text-xs font-bold transition-all ml-2
                   ${maxed
-                    ? "bg-[#E0B84A]/20 text-[#E0B84A] cursor-default"
+                    ? "bg-accent/20 text-accent cursor-default"
                     : canBuy
-                      ? "bg-[#E0B84A] text-[#050505] hover:scale-105 active:scale-95"
-                      : "bg-white/8 text-white/30 cursor-not-allowed"
+                      ? "bg-accent text-accent-foreground hover:scale-105 active:scale-95"
+                      : "bg-overlay/8 text-foreground/30 cursor-not-allowed"
                   }`}
               >
                 {maxed ? "MAX" : `${cost} W`}
@@ -133,7 +158,7 @@ function SkillPanel({ skills, knowledge, getSkillCost, onBuy }: SkillPanelProps)
             </div>
 
             {!maxed && (
-              <p className="mt-2 text-[11px] text-[#B9B2A3]">{skill.description}</p>
+              <p className="mt-2 text-[11px] text-muted">{skill.description}</p>
             )}
           </motion.div>
         );

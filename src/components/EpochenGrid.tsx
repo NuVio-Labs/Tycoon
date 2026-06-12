@@ -8,7 +8,6 @@ type Epoche = {
   bullets: string[];
   image: string | null;
   gradient: string;
-  unlocked: boolean;
 };
 
 const EPOCHEN: Epoche[] = [
@@ -18,8 +17,7 @@ const EPOCHEN: Epoche[] = [
     subtitle: "Der Anfang",
     bullets: ["Erster Computer", "Nur die Grundlagen", "Große Träume"],
     image: kinderzimmerBg,
-    gradient: "from-amber-900/60 to-[#050505]",
-    unlocked: true,
+    gradient: "from-amber-900/60 to-black",
   },
   {
     nr: 2,
@@ -27,8 +25,7 @@ const EPOCHEN: Epoche[] = [
     subtitle: "Lernen & Wachsen",
     bullets: ["Neue Technologien", "Erste Tools", "Git & GitHub"],
     image: null,
-    gradient: "from-blue-900/60 to-[#050505]",
-    unlocked: false,
+    gradient: "from-blue-900/60 to-black",
   },
   {
     nr: 3,
@@ -36,8 +33,7 @@ const EPOCHEN: Epoche[] = [
     subtitle: "Erste eigene Projekte",
     bullets: ["Erste Kunden", "Geld verdienen", "Reputation aufbauen"],
     image: null,
-    gradient: "from-emerald-900/60 to-[#050505]",
-    unlocked: false,
+    gradient: "from-emerald-900/60 to-black",
   },
   {
     nr: 4,
@@ -45,8 +41,7 @@ const EPOCHEN: Epoche[] = [
     subtitle: "Teams & Prozesse",
     bullets: ["Mitarbeiter einstellen", "Größere Projekte", "Marketing & Vertrieb"],
     image: null,
-    gradient: "from-purple-900/60 to-[#050505]",
-    unlocked: false,
+    gradient: "from-purple-900/60 to-black",
   },
   {
     nr: 5,
@@ -54,8 +49,7 @@ const EPOCHEN: Epoche[] = [
     subtitle: "Produkte & Skalierung",
     bullets: ["Eigene SaaS Produkte", "Abonnenten & Umsatz", "Automatisierung"],
     image: null,
-    gradient: "from-rose-900/60 to-[#050505]",
-    unlocked: false,
+    gradient: "from-rose-900/60 to-black",
   },
   {
     nr: 6,
@@ -63,22 +57,23 @@ const EPOCHEN: Epoche[] = [
     subtitle: "Global & Innovativ",
     bullets: ["Globale Standorte", "KI & Innovation", "Die Zukunft gestalten"],
     image: null,
-    gradient: "from-cyan-900/60 to-[#050505]",
-    unlocked: false,
+    gradient: "from-cyan-900/60 to-black",
   },
 ];
 
 type EpochenGridProps = {
-  currentEpoch: number;
+  currentEpoch: number;     // aktive Epoche (1-basiert)
+  maxUnlocked: number;      // höchste freigeschaltete Epoche
   onEnter: (nr: number) => void;
 };
 
-function EpochenGrid({ currentEpoch, onEnter }: EpochenGridProps) {
+function EpochenGrid({ currentEpoch, maxUnlocked, onEnter }: EpochenGridProps) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {EPOCHEN.map((epoche, i) => {
         const isActive = epoche.nr === currentEpoch;
-        const isLocked = !epoche.unlocked && epoche.nr > currentEpoch;
+        const unlocked = epoche.nr <= maxUnlocked;
+        const isLocked = !unlocked;
 
         return (
           <motion.div
@@ -86,15 +81,15 @@ function EpochenGrid({ currentEpoch, onEnter }: EpochenGridProps) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            onClick={() => epoche.unlocked && onEnter(epoche.nr)}
+            onClick={() => unlocked && onEnter(epoche.nr)}
             className={`group relative overflow-hidden rounded-2xl border transition-all
               ${isActive
-                ? "border-[#E0B84A]/50 shadow-lg shadow-[#E0B84A]/10"
+                ? "border-accent/50 shadow-lg shadow-accent/10"
                 : isLocked
-                  ? "border-white/5 opacity-50"
-                  : "border-white/10 hover:border-[#E0B84A]/30"
+                  ? "border-overlay/5 opacity-50"
+                  : "border-overlay/10 hover:border-accent/30"
               }
-              ${epoche.unlocked ? "cursor-pointer" : "cursor-default"}`}
+              ${unlocked ? "cursor-pointer" : "cursor-default"}`}
           >
             {/* Background image or gradient */}
             <div className="relative h-40 w-full overflow-hidden">
@@ -105,10 +100,10 @@ function EpochenGrid({ currentEpoch, onEnter }: EpochenGridProps) {
                   className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                <div className={`h-full w-full bg-gradient-to-br ${epoche.gradient} bg-[#111111]`} />
+                <div className={`h-full w-full bg-gradient-to-br ${epoche.gradient} bg-neutral-900`} />
               )}
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/30 to-transparent" />
+              {/* Overlay — bleibt dunkel, liegt über Bild/Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
               {/* Lock icon */}
               {isLocked && (
@@ -124,19 +119,19 @@ function EpochenGrid({ currentEpoch, onEnter }: EpochenGridProps) {
 
               {/* Epoch number top-left */}
               <div className="absolute left-3 top-3">
-                <span className="text-[10px] font-black tracking-[0.2em] text-[#B9B2A3]">
+                <span className="text-[10px] font-black tracking-[0.2em] text-neutral-300">
                   {epoche.nr}. {epoche.title.toUpperCase()}
                 </span>
-                <p className="text-[9px] text-[#B9B2A3]/70">{epoche.subtitle}</p>
+                <p className="text-[9px] text-neutral-400">{epoche.subtitle}</p>
               </div>
             </div>
 
             {/* Content */}
-            <div className="bg-[#0e0e0e] px-4 py-3">
+            <div className="bg-card-2 px-4 py-3">
               <ul className="space-y-1">
                 {epoche.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-2 text-xs text-[#B9B2A3]">
-                    <span className="h-1 w-1 shrink-0 rounded-full bg-[#E0B84A]/60" />
+                  <li key={b} className="flex items-center gap-2 text-xs text-muted">
+                    <span className="h-1 w-1 shrink-0 rounded-full bg-accent/60" />
                     {b}
                   </li>
                 ))}
@@ -144,20 +139,20 @@ function EpochenGrid({ currentEpoch, onEnter }: EpochenGridProps) {
 
               <div className="mt-3 flex items-center justify-between">
                 {isActive && (
-                  <span className="text-[9px] font-semibold text-[#E0B84A]">● AKTIV</span>
+                  <span className="text-[9px] font-semibold text-accent">● AKTIV</span>
                 )}
                 <button
                   disabled={isLocked}
-                  onClick={(e) => { e.stopPropagation(); epoche.unlocked && onEnter(epoche.nr); }}
+                  onClick={(e) => { e.stopPropagation(); unlocked && onEnter(epoche.nr); }}
                   className={`ml-auto rounded-xl px-4 py-1.5 text-xs font-black tracking-wide transition-all
                     ${isLocked
-                      ? "bg-white/5 text-white/20"
+                      ? "bg-overlay/5 text-foreground/20"
                       : isActive
-                        ? "bg-[#E0B84A] text-[#050505] hover:scale-105"
-                        : "border border-[#E0B84A]/30 text-[#E0B84A] hover:bg-[#E0B84A]/10"
+                        ? "bg-accent text-accent-foreground hover:scale-105"
+                        : "border border-accent/30 text-accent hover:bg-accent/10"
                     }`}
                 >
-                  {isLocked ? "Gesperrt" : isActive ? `Epoche ${epoche.nr}` : `Epoche ${epoche.nr}`}
+                  {isLocked ? "Gesperrt" : `Epoche ${epoche.nr}`}
                 </button>
               </div>
             </div>

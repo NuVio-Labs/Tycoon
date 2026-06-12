@@ -1,13 +1,99 @@
 @import "tailwindcss";
 
+/* ── Themes ──────────────────────────────────────────────────────────────────
+   Jedes Theme definiert dieselben Tokens. Aktiviert über data-theme am <html>.
+   "standard" = NuVio Gold (Default). */
+
+:root,
+[data-theme="standard"] {
+  --background: #050505;
+  --card: #111111;
+  --card-2: #1a1a1a;
+  --accent: #e0b84a;
+  --accent-bright: #f5d98b;
+  --accent-foreground: #050505;
+  --foreground: #f5f3ee;
+  --muted: #b9b2a3;
+  --overlay: #ffffff;
+  --app-font: system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="skin-dark-pro"] {
+  --background: #000000;
+  --card: #0b0b0d;
+  --card-2: #17171b;
+  --accent: #ffd75e;
+  --accent-bright: #ffe9a3;
+  --accent-foreground: #000000;
+  --foreground: #ffffff;
+  --muted: #8f8a7d;
+  --overlay: #ffffff;
+  --app-font: system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="skin-retro"] {
+  --background: #010a04;
+  --card: #04180c;
+  --card-2: #072515;
+  --accent: #2bff6f;
+  --accent-bright: #8bffb0;
+  --accent-foreground: #02160a;
+  --foreground: #c4ffd3;
+  --muted: #56a36b;
+  --overlay: #a8ffc4;
+  --app-font: "Courier New", ui-monospace, monospace;
+}
+
+[data-theme="skin-neon"] {
+  --background: #0b0216;
+  --card: #170b2c;
+  --card-2: #221440;
+  --accent: #ff5edb;
+  --accent-bright: #ff9de8;
+  --accent-foreground: #1a0330;
+  --foreground: #f4ecff;
+  --muted: #a693cc;
+  --overlay: #ffffff;
+  --app-font: system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="skin-minimal"] {
+  --background: #f4f2ec;
+  --card: #ffffff;
+  --card-2: #ece9e0;
+  --accent: #b8923a;
+  --accent-bright: #d4af5c;
+  --accent-foreground: #ffffff;
+  --foreground: #1e1b14;
+  --muted: #7c7567;
+  --overlay: #000000;
+  --app-font: system-ui, -apple-system, sans-serif;
+}
+
+/* ── Tailwind Mapping ─────────────────────────────────────────────────────── */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-overlay: var(--overlay);
+}
+
+/* ── Animationen ─────────────────────────────────────────────────────────── */
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
 }
 
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(224, 184, 74, 0); }
-  50% { box-shadow: 0 0 20px 4px rgba(224, 184, 74, 0.25); }
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 20px 4px color-mix(in srgb, var(--accent) 25%, transparent); }
 }
 
 @keyframes click-burst {
@@ -30,14 +116,14 @@
 .animate-pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
 .animate-click { animation: click-burst 0.18s ease-out; }
 .animate-shimmer {
-  background: linear-gradient(90deg, #E0B84A 25%, #F5D98B 50%, #E0B84A 75%);
+  background: linear-gradient(90deg, var(--accent) 25%, var(--accent-bright) 50%, var(--accent) 75%);
   background-size: 200% auto;
   animation: shimmer 2s linear infinite;
 }
 
 * { -webkit-tap-highlight-color: transparent; }
 
-/* Custom scrollbar — gold on dark */
+/* Custom scrollbar — Akzentfarbe auf Theme-Hintergrund */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -46,20 +132,21 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(224, 184, 74, 0.25);
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(224, 184, 74, 0.5);
+  background: color-mix(in srgb, var(--accent) 50%, transparent);
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(224, 184, 74, 0.25) transparent;
+  scrollbar-color: color-mix(in srgb, var(--accent) 25%, transparent) transparent;
 }
 
 body {
-  background-color: #050505;
-  color: #F5F3EE;
-  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--app-font);
   overscroll-behavior: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

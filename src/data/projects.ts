@@ -303,4 +303,262 @@ export const projects: Project[] = [
     isGraduation: true,
     durationSeconds: 90,
   },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // EPOCHE 2 — AZUBI-ZIMMER (Ausbildung bei der Agentur "PixelWerk")
+  // ════════════════════════════════════════════════════════════════════════
+
+  // ── Tier 1: Git Basics ─────────────────────────────────────────────────
+  {
+    id: "first-commit",
+    name: "Der erste Commit",
+    description: "Erster Tag in der Agentur PixelWerk. Dein Ausbilder zeigt dir das Team-Repository und nickt dir zu. Du tippst mit leicht zitternden Fingern: git commit -m 'mein erster commit'. Willkommen im echten Entwicklerleben.",
+    requirements: [{ skillId: "git", requiredLevel: 5 }],
+    rewards: { knowledge: 0, experience: 150 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "branch-chaos",
+    name: "Branch-Chaos aufräumen",
+    description: "Ein ehemaliger Praktikant hat 14 verwaiste Branches hinterlassen — mit Namen wie 'test2-final-NEU'. Dein Ausbilder grinst: 'Räum das mal auf.' Du lernst rebase, merge und das gute Gefühl eines sauberen Repos.",
+    requirements: [{ skillId: "git", requiredLevel: 10 }],
+    rewards: { knowledge: 0, experience: 170 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "merge-konflikt",
+    name: "Der Merge-Konflikt",
+    description: "Du und der andere Azubi habt dieselbe Datei bearbeitet. Git meldet: CONFLICT. Panik? Nein — du löst deinen ersten echten Merge-Konflikt und fühlst dich danach unbesiegbar.",
+    requirements: [{ skillId: "git", requiredLevel: 15 }],
+    rewards: { knowledge: 0, experience: 190 },
+    completed: false,
+    epoch: 2,
+  },
+
+  // ── Tier 2: Erste React-Schritte ───────────────────────────────────────
+  {
+    id: "komponenten-baukasten",
+    name: "Komponenten-Baukasten",
+    description: "Deine erste React-Aufgabe: eine Button-Bibliothek für das Team. Primary, Secondary, Danger — alles als wiederverwendbare Komponenten. Plötzlich ergibt das Komponenten-Denken Sinn.",
+    requirements: [
+      { skillId: "git", requiredLevel: 18 },
+      { skillId: "react", requiredLevel: 10 },
+    ],
+    rewards: { knowledge: 0, experience: 210 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "todo-react",
+    name: "To-Do App — diesmal in React",
+    description: "Dieselbe App wie damals im Kinderzimmer — aber jetzt mit useState, Props und Komponenten. Du vergleichst den alten Vanilla-JS-Code mit dem neuen und musst lachen: Wie weit du gekommen bist.",
+    requirements: [
+      { skillId: "git", requiredLevel: 20 },
+      { skillId: "react", requiredLevel: 15 },
+    ],
+    rewards: { knowledge: 0, experience: 225 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "kunden-landingpage",
+    name: "Kunden-Landingpage",
+    description: "Dein erstes echtes Kundenprojekt bei PixelWerk: eine Landingpage für ein Fitnessstudio — in React, versteht sich. Der Kunde will 'mehr Dynamik'. Du lieferst.",
+    requirements: [
+      { skillId: "git", requiredLevel: 25 },
+      { skillId: "react", requiredLevel: 20 },
+    ],
+    rewards: { knowledge: 0, experience: 240 },
+    completed: false,
+    epoch: 2,
+  },
+
+  // ── Tier 3: TypeScript kommt dazu ──────────────────────────────────────
+  {
+    id: "props-typisieren",
+    name: "Props endlich typisiert",
+    description: "Der Senior-Dev sieht deine Komponenten und sagt nur: 'Schön. Jetzt mit Typen.' Du schreibst dein erstes interface Props — und der Editor fängt plötzlich deine Fehler, bevor du sie machst.",
+    requirements: [
+      { skillId: "react", requiredLevel: 25 },
+      { skillId: "typescript", requiredLevel: 10 },
+    ],
+    rewards: { knowledge: 0, experience: 255 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "form-wizard",
+    name: "Formular-Wizard",
+    description: "Ein mehrstufiges Anmeldeformular mit Validierung für einen Versicherungskunden. Schritt für Schritt, State über mehrere Seiten, alles typisiert. Trocken? Vielleicht. Lehrreich? Definitiv.",
+    requirements: [
+      { skillId: "git", requiredLevel: 30 },
+      { skillId: "react", requiredLevel: 30 },
+      { skillId: "typescript", requiredLevel: 15 },
+    ],
+    rewards: { knowledge: 0, experience: 270 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "api-anbindung",
+    name: "API-Anbindung",
+    description: "Du verbindest zum ersten Mal ein React-Frontend mit einer echten REST-API — inklusive sauber typisierter Antworten. Als die Daten live im UI auftauchen, grinst du den ganzen Tag.",
+    requirements: [
+      { skillId: "react", requiredLevel: 35 },
+      { skillId: "typescript", requiredLevel: 20 },
+    ],
+    rewards: { knowledge: 0, experience: 285 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "dashboard-widgets",
+    name: "Dashboard-Widgets",
+    description: "Ein Kunde will sein Verwaltungs-Dashboard modernisieren: Widgets, die sich per Drag & Drop anordnen lassen. Du baust ein flexibles Grid-System — und lernst, wie viel Arbeit in 'einfach verschiebbar' steckt.",
+    requirements: [
+      { skillId: "git", requiredLevel: 35 },
+      { skillId: "react", requiredLevel: 40 },
+      { skillId: "typescript", requiredLevel: 25 },
+    ],
+    rewards: { knowledge: 0, experience: 300 },
+    completed: false,
+    epoch: 2,
+  },
+
+  // ── Tier 4: Mittendrin im Agentur-Alltag ───────────────────────────────
+  {
+    id: "code-review",
+    name: "Dein erstes Code-Review",
+    description: "Der Senior reviewed deinen Pull Request — 23 Kommentare. Autsch. Eine Woche später reviewst du seinen Code und findest einen echten Bug. Er kauft dir einen Kaffee. Du bist angekommen.",
+    requirements: [
+      { skillId: "git", requiredLevel: 45 },
+      { skillId: "typescript", requiredLevel: 30 },
+    ],
+    rewards: { knowledge: 0, experience: 315 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "design-system",
+    name: "Design-System der Agentur",
+    description: "PixelWerk braucht ein einheitliches Design-System für alle Kundenprojekte. Du bekommst die Aufgabe: Farben, Typografie, Komponenten — alles dokumentiert und typisiert. Dein Name steht im Footer der Doku.",
+    requirements: [
+      { skillId: "react", requiredLevel: 50 },
+      { skillId: "typescript", requiredLevel: 40 },
+    ],
+    rewards: { knowledge: 0, experience: 335 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "refactoring-sprint",
+    name: "Refactoring-Sprint",
+    description: "Ein uraltes jQuery-Projekt eines Bestandskunden soll nach React migriert werden. Zwei Wochen Sprint, tausende Zeilen Legacy-Code. Du tauchst ab — und tauchst mit einer modernen Codebasis wieder auf.",
+    requirements: [
+      { skillId: "git", requiredLevel: 50 },
+      { skillId: "react", requiredLevel: 55 },
+      { skillId: "typescript", requiredLevel: 45 },
+    ],
+    rewards: { knowledge: 0, experience: 350 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "state-management",
+    name: "State-Management Migration",
+    description: "Das größte Kundenprojekt der Agentur versinkt im Props-Drilling-Chaos. Du schlägst einen zentralen Store vor — und darfst die Migration leiten. Der Code wird halb so lang und doppelt so klar.",
+    requirements: [
+      { skillId: "react", requiredLevel: 60 },
+      { skillId: "typescript", requiredLevel: 50 },
+    ],
+    rewards: { knowledge: 0, experience: 370 },
+    completed: false,
+    epoch: 2,
+  },
+
+  // ── Tier 5: Fortgeschritten ────────────────────────────────────────────
+  {
+    id: "release-pipeline",
+    name: "Release-Pipeline",
+    description: "Releases bei PixelWerk liefen bisher per Hand — und gingen regelmäßig schief. Du baust eine saubere Pipeline mit Tags, Release-Branches und automatischen Checks. Der Chef ist beeindruckt.",
+    requirements: [
+      { skillId: "git", requiredLevel: 65 },
+      { skillId: "typescript", requiredLevel: 55 },
+    ],
+    rewards: { knowledge: 0, experience: 390 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "kundenportal",
+    name: "Kundenportal",
+    description: "Ein komplettes Self-Service-Portal: Login, Dokumente, Rechnungen, Support-Tickets. Das bisher größte Projekt deiner Ausbildung — und du baust tragende Teile davon selbst.",
+    requirements: [
+      { skillId: "git", requiredLevel: 70 },
+      { skillId: "react", requiredLevel: 70 },
+      { skillId: "typescript", requiredLevel: 65 },
+    ],
+    rewards: { knowledge: 0, experience: 410 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "performance-audit",
+    name: "Performance-Audit",
+    description: "Die App eines Großkunden lädt 8 Sekunden. Inakzeptabel. Du analysierst Bundles, lazy-loadest Routen, memoisierst Komponenten — am Ende sind es 1,2 Sekunden. Der Kunde verlängert den Vertrag.",
+    requirements: [
+      { skillId: "react", requiredLevel: 80 },
+      { skillId: "typescript", requiredLevel: 75 },
+    ],
+    rewards: { knowledge: 0, experience: 430 },
+    completed: false,
+    epoch: 2,
+  },
+
+  // ── Tier 6: Kurz vor der Prüfung ───────────────────────────────────────
+  {
+    id: "open-source",
+    name: "Open-Source Beitrag",
+    description: "Du findest einen Bug in einer Library, die ihr täglich nutzt. Statt zu meckern, fixst du ihn — und stellst deinen ersten Pull Request an ein echtes Open-Source-Projekt. Merged. Dein Name im Changelog.",
+    requirements: [
+      { skillId: "git", requiredLevel: 90 },
+      { skillId: "react", requiredLevel: 85 },
+      { skillId: "typescript", requiredLevel: 80 },
+    ],
+    rewards: { knowledge: 0, experience: 450 },
+    completed: false,
+    epoch: 2,
+  },
+  {
+    id: "projekt-lead",
+    name: "Projekt-Lead: Agentur-Website",
+    description: "PixelWerk relauncht die eigene Website — und dein Ausbilder sagt: 'Mach du das. Komplett.' Planung, Architektur, Umsetzung, Review. Dein erstes Projekt als Lead. Es wird das beste der Agentur.",
+    requirements: [
+      { skillId: "git", requiredLevel: 95 },
+      { skillId: "react", requiredLevel: 95 },
+      { skillId: "typescript", requiredLevel: 90 },
+    ],
+    rewards: { knowledge: 0, experience: 480 },
+    completed: false,
+    epoch: 2,
+  },
+
+  // ── Graduation Epoche 2 ────────────────────────────────────────────────
+  {
+    id: "graduation-azubi",
+    name: "Abschlussprüfung: NuVio OS v0.2",
+    description: "Der Prüfungstag. Dein Meisterstück: NuVio OS — das Projekt aus dem Kinderzimmer, komplett neu gebaut mit React und TypeScript. Sauber versioniert, getestet, dokumentiert. Die Prüfer nicken anerkennend. Wenn das läuft, bist du ausgelernt — und bereit für die Selbstständigkeit.",
+    requirements: [
+      { skillId: "git", requiredLevel: 100 },
+      { skillId: "react", requiredLevel: 100 },
+      { skillId: "typescript", requiredLevel: 100 },
+    ],
+    rewards: { knowledge: 0, experience: 1000 },
+    completed: false,
+    isGraduation: true,
+    durationSeconds: 120,
+    epoch: 2,
+  },
 ];

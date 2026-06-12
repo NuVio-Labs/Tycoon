@@ -1,4 +1,4 @@
-export type SkillId = "html" | "css" | "javascript";
+export type SkillId = "html" | "css" | "javascript" | "git" | "react" | "typescript";
 
 export type Skill = {
   id: SkillId;
@@ -7,4 +7,5 @@ export type Skill = {
   level: number;
   maxLevel: number;
   baseCost: number;
+  epoch?: number; // 1 = Kinderzimmer (Default), 2 = Azubi-Zimmer
 };

@@ -13,4 +13,5 @@ export type RoomUpgrade = {
     type: UpgradeEffectType;
     value: number;
   };
+  epoch?: number;        // 1 = Kinderzimmer (Default), 2 = Azubi-Zimmer
 };

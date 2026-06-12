@@ -19,4 +19,5 @@ export type Project = {
   completed: boolean;
   isGraduation?: boolean;
   durationSeconds?: number;
+  epoch?: number; // 1 = Kinderzimmer (Default), 2 = Azubi-Zimmer
 };

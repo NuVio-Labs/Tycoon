@@ -26,7 +26,7 @@ type BottomNavProps = {
 
 function BottomNav({ active, onChange }: BottomNavProps) {
   return (
-    <nav className="flex items-center justify-around rounded-2xl border border-[#E0B84A]/15 bg-[#111111]/95 px-1 py-1.5 backdrop-blur-sm">
+    <nav className="flex items-center justify-around rounded-2xl border border-accent/15 bg-card/95 px-1 py-1.5 backdrop-blur-sm">
       {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
         const isActive = active === id;
         return (
@@ -34,12 +34,12 @@ function BottomNav({ active, onChange }: BottomNavProps) {
             key={id}
             onClick={() => onChange(id)}
             className={`flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 transition-all
-              ${isActive ? "text-[#E0B84A]" : "text-[#B9B2A3] hover:text-[#F5F3EE]"}`}
+              ${isActive ? "text-accent" : "text-muted hover:text-foreground"}`}
           >
-            <div className={`rounded-xl p-1 transition-colors ${isActive ? "bg-[#E0B84A]/15" : ""}`}>
+            <div className={`rounded-xl p-1 transition-colors ${isActive ? "bg-accent/15" : ""}`}>
               <Icon size={16} strokeWidth={isActive ? 2.5 : 1.8} />
             </div>
-            <span className="text-[9px] font-semibold tracking-wide leading-none">
+            <span className="hidden sm:block text-[9px] font-semibold tracking-wide leading-none">
               {label}
             </span>
           </button>
